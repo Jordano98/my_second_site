@@ -30,7 +30,7 @@ def blog_home_view(request):
 def blog_single_view(request):
     posts=Post.objects.filter(published_date__lte=Now(),status=1)
     tags=Tag.objects.all()
-    categories=Category.objects.all()
+    categories = Category.objects.all().annotate(post_count= Count("courses"))
 
     context={'posts':posts,'tags':tags,'categories':categories }
     return render(request,'blog/blog-single.html',context)
