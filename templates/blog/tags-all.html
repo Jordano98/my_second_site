@@ -1,0 +1,10 @@
+{% load static %}
+
+<h3 class="sidebar-title">Tags</h3>
+<div class="sidebar-item tags">
+    <ul>
+        {% for tag in tags%}
+            <li><a href="#">{{tag}}</a></li>
+        {% endfor %}
+    </ul>
+</div><!-- End sidebar tags-->
