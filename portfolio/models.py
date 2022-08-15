@@ -21,7 +21,7 @@ class Project(models.Model):
     project_date=models.DateTimeField(null=True)
     title = models.CharField(max_length=255)
     content = models.TextField()
-    category = models.ManyToManyField(Pro_Category)
+    category = models.ForeignKey(Pro_Category, on_delete=models.DO_NOTHING,null=True, blank=True)
     gallery = models.ManyToManyField(Pro_Gallery)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
