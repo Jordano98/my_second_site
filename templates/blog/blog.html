@@ -30,18 +30,18 @@
           <article class="entry">
 
             <div class="entry-img">
-              <img src="{% static 'assets/img/blog/blog-1.jpg' %} " alt="" class="img-fluid">
+              <img src="{{post.image.url}} " alt="" class="img-fluid">
             </div>
 
             <h2 class="entry-title">
-              <a href="blog-single.html">{{post.title}}</a>
+              <a href="{% url 'blog:blog-single' pid=post.id %}">{{post.title}}</a>
             </h2>
 
             <div class="entry-meta">
               <ul>
-                <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">John Doe</a></li>
-                <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
-                <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
+                <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="{% url 'blog:author' author_username=post.author.username %}">{{post.author.get_full_name}}</a></li>
+                <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#"><time datetime="2020-01-01">{{post.published_date}}</time></a></li>
+                <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="#">12 Comments</a></li>
               </ul>
             </div>
 
@@ -50,7 +50,7 @@
                 {{post.content}}
               </p>
               <div class="read-more">
-                <a href="blog-single.html">Read More</a>
+                <a href="{% url 'blog:blog-single' pid=post.id %}">Read More</a>
               </div>
             </div>
 

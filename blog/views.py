@@ -4,12 +4,20 @@ from django.shortcuts import render
 from blog.models import Post,Category,Comment
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from taggit.models import Tag
+from django.shortcuts import redirect, render,get_object_or_404,HttpResponse,HttpResponseRedirect
 
-def blog_home_view(request):
+def blog_home_view(request,**kwargs):
 
     posts=Post.objects.filter(published_date__lte=Now(),status=1)
     tags=Tag.objects.all()
     categories = Category.objects.all().annotate(post_count= Count("courses"))
+
+    if kwargs.get('cat_name') != None:
+        posts=posts.filter(category__name=kwargs['cat_name'])
+    if kwargs.get('author_username') != None :
+        posts=posts.filter(author__username=kwargs['author_username'])
+    if kwargs.get('tag_name') != None :
+        posts=posts.filter(tags__name__in=[kwargs['tag_name']]) #kwargs should be in brackets!!__in means is it exists init?
     
     posts=Paginator(posts,3)
     page_number=request.GET.get('page')
@@ -27,12 +35,16 @@ def blog_home_view(request):
 
 
 
-def blog_single_view(request):
+def blog_single_view(request,**kwargs):
     posts=Post.objects.filter(published_date__lte=Now(),status=1)
     tags=Tag.objects.all()
     categories = Category.objects.all().annotate(post_count= Count("courses"))
 
-    context={'posts':posts,'tags':tags,'categories':categories }
+    if kwargs.get('pid') != None:
+        post=get_object_or_404(Post, pk=kwargs['pid'],published_date__lte =Now(),status=1)
+        
+
+    context={'posts':posts,'tags':tags,'categories':categories,'post':post }
     return render(request,'blog/blog-single.html',context)
 
 
