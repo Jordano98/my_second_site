@@ -84,24 +84,60 @@
             </div>
           </div><!-- End blog author bio -->
 
-          <div class="blog-comments">
+          <div class="blog-comments blog-author">
 
-            <h4 class="comments-count">{% comment_count post.id %}</h4>
-
-            <div id="comment-1" class="comment">
+            <h4 class="comments-count">{% comment_count post.id %} comments</h4>
+            {% for comment in comments %}
+            <div id="comment-1" class="comment blog-author">
               <div class="d-flex">
                 <div class="comment-img"><img src="{% static 'assets/img/blog/comments-1.jpg' %} " alt=""></div>
                 <div>
-                  <h5><a href="">Georgia Reader</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
-                  <time datetime="2020-01-01">01 Jan, 2020</time>
+                  <h5><a href="">{{comment.name}}</a></h5>
+                  <time datetime="2020-01-01">{{comment.created_date}}</time>
                   <p>
-                    Et rerum totam nisi. Molestiae vel quam dolorum vel voluptatem et et. Est ad aut sapiente quis molestiae est qui cum soluta.
-                    Vero aut rerum vel. Rerum quos laboriosam placeat ex qui. Sint qui facilis et.
+                    {{comment.massage}}
                   </p>
                 </div>
               </div>
             </div><!-- End comment #1 -->
+            {% empty %}
+						<p>no comments here,be the first one :)))</p>
+            {% endfor %}
           </div><!-- End blog comments -->
+          <!-- comment form -->
+          <div class="comment-form blog-author">
+            <h4 class=" mb-4">Leave a Comment</h4>
+            <form  method="post" action="{% url 'blog:blog-single' pid=post.id %}">
+              {% csrf_token %}
+              <input type="hidden" name="post" value="{{post.id}}">
+              {% if request.user.is_authenticated %}
+              <input type="hidden" name="name" value="{{request.user.username}}">
+              <input type="hidden" name="email" value="{{request.user.email}}">
+              {% else %}
+              <div class="form-group form-inline">
+                <div class="form-group col-lg-6 col-md-12 name mb-2">
+                  <input type="text" class="form-control" name="name" placeholder="Enter Name"
+                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'">
+                </div>
+                <div class="form-group col-lg-6 col-md-12 email mb-2">
+                  <input type="email" class="form-control" name="email" placeholder="Enter email address"
+                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'">
+                </div>
+              </div>
+              {% endif %}
+              <div class="form-group">
+                <input type="text" class="form-control mb-2" name="subject" placeholder="Subject"
+                  onfocus="this.placeholder = ''" onblur="this.placeholder = 'Subject'">
+              </div>
+              <div class="form-group mb-2">
+                <textarea class="form-control mb-10" rows="5" name="massage" placeholder="Messege"
+                  onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"
+                  required=""></textarea>
+              </div>
+              <button type="submit" class="btn btn-success text-uppercase">Post Comment</button>
+            </form>
+          </div>
+          <!-- comment form end -->
 
         </div><!-- End blog entries list -->
 

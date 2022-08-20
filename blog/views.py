@@ -5,6 +5,8 @@ from blog.models import Post,Category,Comment
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from taggit.models import Tag
 from django.shortcuts import redirect, render,get_object_or_404,HttpResponse,HttpResponseRedirect
+from blog.forms import CommentForm
+from django.contrib import messages
 
 def blog_home_view(request,**kwargs):
 
@@ -36,15 +38,32 @@ def blog_home_view(request,**kwargs):
 
 
 def blog_single_view(request,**kwargs):
+
+    if request.method=='POST':
+        form=CommentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            
+            messages.add_message(request,messages.SUCCESS,'your comment submited successfully')
+        else:
+            messages.add_message(request,messages.ERROR,'your comment did not submited')
+
+    form= CommentForm()
+
     posts=Post.objects.filter(published_date__lte=Now(),status=1)
     tags=Tag.objects.all()
     categories = Category.objects.all().annotate(post_count= Count("courses"))
 
     if kwargs.get('pid') != None:
         post=get_object_or_404(Post, pk=kwargs['pid'],published_date__lte =Now(),status=1)
-        
+        comments=Comment.objects.filter(post=post.id,approach=True)
 
-    context={'posts':posts,'tags':tags,'categories':categories,'post':post }
+        def counter ():
+            post.counted_views +=1
+            post.save()
+        counter()
+        
+    context={'posts':posts,'tags':tags,'categories':categories,'post':post,'form':form,'comments':comments }
     return render(request,'blog/blog-single.html',context)
 
 
