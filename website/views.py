@@ -2,7 +2,7 @@ from django.shortcuts import render
 from website.forms import Newsletterform,Contactform
 from django.contrib import messages
 from django.shortcuts import redirect, render,get_object_or_404,HttpResponse,HttpResponseRedirect
-
+from website.models import Team
 
 def index_view(request):
     return render(request,'website/index.html')
@@ -23,10 +23,10 @@ def contact_view(request):
 
 def team_view(request):
     pass
-    #members=CustomUser.objects.all()
+    members=Team.objects.all()
 
-    #context={'members':members}
-    #return render(request,'website/team.html',context)
+    context={'members':members}
+    return render(request,'website/team.html',context)
 
 def newsletter_view(request):
     if request.method=='POST':
