@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 class Contact(models.Model):
     name = models.CharField(max_length=255)
@@ -19,4 +20,9 @@ class Newsletter(models.Model):
     def __str__(self):
         return self.email
 
+
+
+#class AbstractUser(AbstractUser):
+    #position=models.CharField(max_length=255)
+    #image= models.ImageField(upload_to='website/', default='./team-1.jpg')
 # Create your models here.
