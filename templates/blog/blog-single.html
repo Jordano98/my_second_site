@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% load blog-tags %}
 {% block content %}
 <main id="main">
@@ -93,7 +94,7 @@
                 <div class="comment-img"><img src="{% static 'assets/img/blog/comments-1.jpg' %} " alt=""></div>
                 <div>
                   <h5><a href="">{{comment.name}}</a></h5>
-                  <time datetime="2020-01-01">{{comment.created_date}}</time>
+                  <time datetime="2020-01-01">{{comment.created_date|naturaltime}}</time>
                   <p>
                     {{comment.massage}}
                   </p>

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% load blog-tags %}
 {% block content %}
 <main id="main">
@@ -41,7 +42,7 @@
             <div class="entry-meta">
               <ul>
                 <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="{% url 'blog:author' author_username=post.author.username %}">{{post.author.get_full_name}}</a></li>
-                <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#"><time datetime="2020-01-01">{{post.published_date|date:"D d M Y"}}</time></a></li>
+                <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#"><time datetime="2020-01-01">{{post.published_date|naturaltime}}</time></a></li>
                 <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="#">{% comment_count post.id %} Comments</a></li>
               </ul>
             </div>
