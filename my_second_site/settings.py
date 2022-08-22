@@ -46,8 +46,16 @@ INSTALLED_APPS = [
     'django_extensions',
     'django.contrib.sites',
     'django.contrib.sitemaps',
+    'robots',
+    "django_debugger",
+    'debug_toolbar',
 ]
 
+#debugger config
+DEBUGGER_ENABLE = True
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 #sites framework
 SITE_ID = 1
 
@@ -59,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'my_second_site.urls'
