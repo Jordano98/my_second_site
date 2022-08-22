@@ -18,12 +18,23 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from django.contrib.sitemaps.views import sitemap # new
+from website.sitemaps import StaticViewSitemap
+from blog.sitemaps import BlogSitemap
+
+sitemaps={
+    'static':StaticViewSitemap ,
+    'blog' : BlogSitemap
+}
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('website.urls')),
     path('blog/',include('blog.urls')),
     path('portfolio/',include('portfolio.urls')),
     path('accounts/',include('accounts.urls')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
+     name='django.contrib.sitemaps.views.sitemap'),
 
     path('accounts/password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='accounts/password_reset_done.html'), name='password_reset_done'),
     path('accounts/reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="accounts/password_reset_confirm.html"), name='password_reset_confirm'),

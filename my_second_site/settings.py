@@ -43,7 +43,13 @@ INSTALLED_APPS = [
     'portfolio',
     'accounts',
     'django.contrib.humanize',
+    'django_extensions',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 ]
+
+#sites framework
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
