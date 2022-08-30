@@ -117,8 +117,14 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#AUTHENTICATION-SETTINGS
+
+AUTHENTICATION_BACKENDS = [
+    'accounts.backends.EmailPhoneUsernameAuthenticationBackend'
+]
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
 
 #robots
-#ROBOTS_USE_HOST=False
+#ROBOTS_USE_HOST=False 
 #ROBOTS_USE_SITEMAP=False
