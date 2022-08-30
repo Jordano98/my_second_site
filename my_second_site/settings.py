@@ -42,6 +42,15 @@ INSTALLED_APPS = [
     'robots',
     "django_debugger",
     'debug_toolbar',
+    "compressor",
+]
+
+#static files finders
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
 ]
 
 
@@ -124,6 +133,11 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
+
+
+#django-compressor settings
+COMPRESS_ENABLED=True
+
 
 #robots
 #ROBOTS_USE_HOST=False 
